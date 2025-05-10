@@ -56,8 +56,7 @@ test('Payment Gateway', async () => {
     const paySuccess = page1.getByRole('heading', { name: 'Payment successfull!' });
     await expect(paySuccess).toContainText('Payment successfull!');
 
-     // Wait for Generate Card Number to open in a new tab
-    //const page1Promise = context.waitForEvent('page');
+    // Check credit balance after payment
     const cardLimit = await page1.getByRole('link', { name: 'Check Credit Card Limit' })
     await cardLimit.click();
     await page1.waitForTimeout(3000);
