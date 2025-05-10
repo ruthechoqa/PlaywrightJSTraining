@@ -56,5 +56,18 @@ test('Payment Gateway', async () => {
     const paySuccess = page1.getByRole('heading', { name: 'Payment successfull!' });
     await expect(paySuccess).toContainText('Payment successfull!');
 
+     // Wait for Generate Card Number to open in a new tab
+    //const page1Promise = context.waitForEvent('page');
+    const cardLimit = await page1.getByRole('link', { name: 'Check Credit Card Limit' })
+    await cardLimit.click();
+    await page1.waitForTimeout(3000);
+
+    await page1.fill('id=card_nmuber', cardNumber);
+    await page1.getByRole('button', { name: 'submit' }).click();
+    await page1.waitForTimeout(3000);
+
+    const creditBalance = await page1.$('//*[@id="three"]/div/div/h4/span');
+    const creditValue = await creditBalance.innerText(); 
+    console.log(`Credit Balance: ${creditValue}`);
 })
 
